@@ -1,0 +1,111 @@
+{
+    "data": {
+        "reserves": [
+            {
+                "symbol": "DAI",
+                "liquidityRate": "0.03",
+                "variableBorrowRate": "0.04",
+                "stableBorrowRate": "0.05",
+                "totalLiquidity": "1000000"
+            },
+            {
+                "symbol": "USDC",
+                "liquidityRate": "0.025",
+                "variableBorrowRate": "0.035",
+                "stableBorrowRate": "0.045",
+                "totalLiquidity": "2000000"
+            },
+            {
+                "symbol": "USDT",
+                "liquidityRate": "0.02",
+                "variableBorrowRate": "0.03",
+                "stableBorrowRate": "0.04",
+                "totalLiquidity": "1500000"
+            },
+            {
+                "symbol": "ETH",
+                "liquidityRate": "0.01",
+                "variableBorrowRate": "0.02",
+                "stableBorrowRate": "0.03",
+                "totalLiquidity": "500000"
+            },
+            {
+                "symbol": "WBTC",
+                "liquidityRate": "0.015",
+                "variableBorrowRate": "0.025",
+                "stableBorrowRate": "0.035",
+                "totalLiquidity": "300000"
+            },
+            {
+                "symbol": "BUSD",
+                "liquidityRate": "0.022",
+                "variableBorrowRate": "0.032",
+                "stableBorrowRate": "0.042",
+                "totalLiquidity": "800000"
+            },
+            {
+                "symbol": "TUSD",
+                "liquidityRate": "0.024",
+                "variableBorrowRate": "0.034",
+                "stableBorrowRate": "0.044",
+                "totalLiquidity": "600000"
+            },
+            {
+                "symbol": "LINK",
+                "liquidityRate": "0.02",
+                "variableBorrowRate": "0.06",
+                "stableBorrowRate": "0.07",
+                "totalLiquidity": "150000"
+            },
+            {
+                "symbol": "UNI",
+                "liquidityRate": "0.025",
+                "variableBorrowRate": "0.07",
+                "stableBorrowRate": "0.08",
+                "totalLiquidity": "100000"
+            },
+            {
+                "symbol": "AAVE",
+                "liquidityRate": "0.03",
+                "variableBorrowRate": "0.08",
+                "stableBorrowRate": "0.09",
+                "totalLiquidity": "80000"
+            },
+            {
+                "symbol": "SNX",
+                "liquidityRate": "0.015",
+                "variableBorrowRate": "0.09",
+                "stableBorrowRate": "0.10",
+                "totalLiquidity": "50000"
+            },
+            {
+                "symbol": "MKR",
+                "liquidityRate": "0.02",
+                "variableBorrowRate": "0.065",
+                "stableBorrowRate": "0.075",
+                "totalLiquidity": "120000"
+            },
+            {
+                "symbol": "COMP",
+                "liquidityRate": "0.025",
+                "variableBorrowRate": "0.075",
+                "stableBorrowRate": "0.085",
+                "totalLiquidity": "90000"
+            },
+            {
+                "symbol": "YFI",
+                "liquidityRate": "0.01",
+                "variableBorrowRate": "0.085",
+                "stableBorrowRate": "0.095",
+                "totalLiquidity": "40000"
+            },
+            {
+                "symbol": "SUSHI",
+                "liquidityRate": "0.015",
+                "variableBorrowRate": "0.095",
+                "stableBorrowRate": "0.105",
+                "totalLiquidity": "30000"
+            }
+        ]
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1_score": 1.0,
+    "feature_importance": {
+        "liquidityRate": 0.017574891774891778,
+        "variableBorrowRate": 0.289,
+        "stableBorrowRate": 0.19028138528138527,
+        "rate_spread": 0.26276190476190475,
+        "rate_ratio": 0.2403818181818182,
+        "stable_variable_diff": 0.0
+    }
+}

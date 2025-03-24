@@ -1,17 +1,50 @@
-node_modules
+﻿# Python
+__pycache__/
+*.py[cod]
+*.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
 .env
 
-# Hardhat files
-/cache
-/artifacts
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
 
-# TypeChain files
-/typechain
-/typechain-types
+# Logs
+logs/
+*.log
 
-# solidity-coverage files
-/coverage
-/coverage.json
+# Database
+*.db
+*.sqlite3
 
-# Hardhat Ignition default folder for deployments against a local node
-ignition/deployments/chain-31337
+# Model files (you might want to include these in your repo)
+# models/*.pkl
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# OS specific
+.DS_Store
+Thumbs.db

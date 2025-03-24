@@ -1,0 +1,14 @@
+﻿{
+  "mumbai": {
+    "flashLoanContract": "0x1234567890123456789012345678901234567890",
+    "priceOracleContract": "0x0987654321098765432109876543210987654321",
+    "deploymentBlock": 12345678,
+    "deploymentTimestamp": 1625097600
+  },
+  "polygon": {
+    "flashLoanContract": "0x2345678901234567890123456789012345678901",
+    "priceOracleContract": "0x1098765432109876543210987654321098765432",
+    "deploymentBlock": 23456789,
+    "deploymentTimestamp": 1635097600
+  }
+}
