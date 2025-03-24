@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Flash Loan Risk API</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
+        .endpoint { margin-bottom: 20px; padding: 10px; border: 1px solid #ddd; }
+        .method { font-weight: bold; }
+        .url { font-family: monospace; }
+    </style>
+</head>
+<body>
+    <h1>Flash Loan Risk API</h1>
+    <p>Welcome to the Flash Loan Risk API. Below are the available endpoints:</p>
+    
+    <div class="endpoint">
+        <div><span class="method">GET</span> <span class="url">/api/health</span></div>
+        <p>Check the health status of the API</p>
+    </div>
+    
+    <div class="endpoint">
+        <div><span class="method">POST</span> <span class="url">/api/predict</span></div>
+        <p>Predict risk using the ML model</p>
+    </div>
+    
+    <div class="endpoint">
+        <div><span class="method">POST</span> <span class="url">/api/analyze</span></div>
+        <p>Analyze risk for a specific asset</p>
+    </div>
+    
+    <div class="endpoint">
+        <div><span class="method">POST</span> <span class="url">/api/blockchain/check-loan</span></div>
+        <p>Check flash loan risk using the blockchain contract</p>
+    </div>
+    
+    <div class="endpoint">
+        <div><span class="method">POST</span> <span class="url">/api/blockchain/simulate-loan</span></div>
+        <p>Simulate a flash loan using the blockchain contract</p>
+    </div>
+    
+    <div class="endpoint">
+        <div><span class="method">GET</span> <span class="url">/api/blockchain/token-price?token=SYMBOL</span></div>
+        <p>Get token price from the blockchain oracle</p>
+    </div>
+    
+    <div class="endpoint">
+        <div><span class="method">GET</span> <span class="url">/api/blockchain/supported-tokens</span></div>
+        <p>Get list of supported tokens</p>
+    </div>
+    
+    <div class="endpoint">
+        <div><span class="method">GET</span> <span class="url">/api/blockchain/network</span></div>
+        <p>Get blockchain network information</p>
+    </div>
+</body>
+</html>

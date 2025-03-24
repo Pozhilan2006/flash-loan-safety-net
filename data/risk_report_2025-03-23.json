@@ -1,0 +1,35 @@
+{
+    "timestamp": "2025-03-23T22:58:13.112803",
+    "overall_risk_level": "low",
+    "risk_metrics": {
+        "high_risk_assets": 0,
+        "medium_risk_assets": 2,
+        "low_risk_assets": 0,
+        "average_risk_score": 0.3,
+        "suspicious_transactions": 0
+    },
+    "market_sentiment": {
+        "current": "neutral",
+        "trend": "stable",
+        "risk_level": "low"
+    },
+    "top_risk_assets": [
+        {
+            "symbol": "TEST",
+            "risk_score": 0.3,
+            "risk_level": "medium",
+            "liquidity_rate": 0.01,
+            "borrow_rate": 0.02,
+            "is_anomaly": false
+        },
+        {
+            "symbol": "TEST",
+            "risk_score": 0.3,
+            "risk_level": "medium",
+            "liquidity_rate": 0.01,
+            "borrow_rate": 0.02,
+            "is_anomaly": false
+        }
+    ],
+    "recent_suspicious_transactions": []
+}

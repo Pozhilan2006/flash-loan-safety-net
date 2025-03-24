@@ -1,0 +1,528 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Loan Risk API Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .status {
+            display: flex;
+            gap: 20px;
+        }
+        .status-item {
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+        .status-label {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .status-value {
+            color: #007bff;
+        }
+        .status-value.connected {
+            color: #28a745;
+        }
+        .status-value.disconnected {
+            color: #dc3545;
+        }
+        .card {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .endpoint-section {
+            margin-bottom: 30px;
+        }
+        .endpoint {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .endpoint-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .endpoint-url {
+            font-family: monospace;
+            background-color: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 3px;
+        }
+        .method {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        .method.get {
+            background-color: #28a745;
+            color: white;
+        }
+        .method.post {
+            background-color: #007bff;
+            color: white;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0069d9;
+        }
+        .response {
+            margin-top: 15px;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 5px;
+            border-radius: 5px 5px 0 0;
+        }
+        .tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom: 1px solid white;
+            margin-bottom: -1px;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Flash Loan Risk API Dashboard</h1>
+            <div class="status" id="api-status">
+                <div class="status-item">
+                    <span class="status-label">API Status:</span>
+                    <span class="status-value" id="status">Loading...</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Model:</span>
+                    <span class="status-value" id="model-status">Loading...</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Blockchain:</span>
+                    <span class="status-value" id="blockchain-status">Loading...</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Network:</span>
+                    <span class="status-value" id="network">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" data-tab="risk-assessment">Risk Assessment</div>
+            <div class="tab" data-tab="blockchain">Blockchain</div>
+            <div class="tab" data-tab="tokens">Tokens</div>
+        </div>
+
+        <div class="tab-content active" id="risk-assessment">
+            <div class="endpoint-section">
+                <h2>Risk Assessment Endpoints</h2>
+                
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <h3>Predict Risk</h3>
+                        <span class="endpoint-url"><span class="method post">POST</span> /api/predict</span>
+                    </div>
+                    <p>Predict risk using the ML model based on liquidity and borrow rates.</p>
+                    <div class="form-group">
+                        <label for="liquidityRate">Liquidity Rate:</label>
+                        <input type="number" id="liquidityRate" step="0.01" value="0.05">
+                    </div>
+                    <div class="form-group">
+                        <label for="variableBorrowRate">Variable Borrow Rate:</label>
+                        <input type="number" id="variableBorrowRate" step="0.01" value="0.08">
+                    </div>
+                    <div class="form-group">
+                        <label for="stableBorrowRate">Stable Borrow Rate:</label>
+                        <input type="number" id="stableBorrowRate" step="0.01" value="0.07">
+                    </div>
+                    <button onclick="predictRisk()">Predict Risk</button>
+                    <div class="response" id="predict-response"></div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <h3>Analyze Asset</h3>
+                        <span class="endpoint-url"><span class="method post">POST</span> /api/analyze</span>
+                    </div>
+                    <p>Analyze risk for a specific asset using rule-based assessment.</p>
+                    <div class="form-group">
+                        <label for="symbol">Token Symbol:</label>
+                        <select id="symbol">
+                            <option value="DAI">DAI</option>
+                            <option value="USDC">USDC</option>
+                            <option value="USDT">USDT</option>
+                            <option value="WETH">WETH</option>
+                            <option value="WBTC">WBTC</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount:</label>
+                        <input type="number" id="amount" value="1000">
+                    </div>
+                    <button onclick="analyzeAsset()">Analyze Asset</button>
+                    <div class="response" id="analyze-response"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="blockchain">
+            <div class="endpoint-section">
+                <h2>Blockchain Endpoints</h2>
+                
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <h3>Check Flash Loan</h3>
+                        <span class="endpoint-url"><span class="method post">POST</span> /api/blockchain/check-loan</span>
+                    </div>
+                    <p>Check flash loan risk using the blockchain contract.</p>
+                    <div class="form-group">
+                        <label for="borrower">Borrower Address:</label>
+                        <input type="text" id="borrower" value="0x70997970C51812dc3A010C7d01b50e0d17dc79C8">
+                    </div>
+                    <div class="form-group">
+                        <label for="loan-tokens">Tokens (comma-separated):</label>
+                        <input type="text" id="loan-tokens" value="USDC,DAI">
+                    </div>
+                    <div class="form-group">
+                        <label for="loan-amounts">Amounts (comma-separated):</label>
+                        <input type="text" id="loan-amounts" value="1000,2000">
+                    </div>
+                    <button onclick="checkFlashLoan()">Check Loan</button>
+                    <div class="response" id="check-loan-response"></div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <h3>Simulate Flash Loan</h3>
+                        <span class="endpoint-url"><span class="method post">POST</span> /api/blockchain/simulate-loan</span>
+                    </div>
+                    <p>Simulate a flash loan using the blockchain contract.</p>
+                    <div class="form-group">
+                        <label for="receiver">Receiver Address:</label>
+                        <input type="text" id="receiver" value="0x70997970C51812dc3A010C7d01b50e0d17dc79C8">
+                    </div>
+                    <div class="form-group">
+                        <label for="sim-tokens">Tokens (comma-separated):</label>
+                        <input type="text" id="sim-tokens" value="USDC,DAI">
+                    </div>
+                    <div class="form-group">
+                        <label for="sim-amounts">Amounts (comma-separated):</label>
+                        <input type="text" id="sim-amounts" value="1000,2000">
+                    </div>
+                    <button onclick="simulateFlashLoan()">Simulate Loan</button>
+                    <div class="response" id="simulate-loan-response"></div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <h3>Network Information</h3>
+                        <span class="endpoint-url"><span class="method get">GET</span> /api/blockchain/network</span>
+                    </div>
+                    <p>Get information about the connected blockchain network.</p>
+                    <button onclick="getNetworkInfo()">Get Network Info</button>
+                    <div class="response" id="network-info-response"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tokens">
+            <div class="endpoint-section">
+                <h2>Token Endpoints</h2>
+                
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <h3>Get Token Price</h3>
+                        <span class="endpoint-url"><span class="method get">GET</span> /api/blockchain/token-price</span>
+                    </div>
+                    <p>Get token price from the blockchain oracle.</p>
+                    <div class="form-group">
+                        <label for="token">Token Symbol:</label>
+                        <select id="token">
+                            <option value="DAI">DAI</option>
+                            <option value="USDC">USDC</option>
+                            <option value="USDT">USDT</option>
+                            <option value="WETH">WETH</option>
+                            <option value="WBTC">WBTC</option>
+                        </select>
+                    </div>
+                    <button onclick="getTokenPrice()">Get Price</button>
+                    <div class="response" id="token-price-response"></div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <h3>Supported Tokens</h3>
+                        <span class="endpoint-url"><span class="method get">GET</span> /api/blockchain/supported-tokens</span>
+                    </div>
+                    <p>Get list of supported tokens and their addresses.</p>
+                    <button onclick="getSupportedTokens()">Get Supported Tokens</button>
+                    <div class="response" id="supported-tokens-response"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fetch API status on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchApiStatus();
+            setupTabs();
+        });
+
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and content
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    tab.classList.add('active');
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        }
+
+        function fetchApiStatus() {
+            fetch('/api/health')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('status').textContent = data.status;
+                    document.getElementById('model-status').textContent = data.model_loaded ? 'Loaded' : 'Not Loaded';
+                    
+                    const blockchainStatus = document.getElementById('blockchain-status');
+                    blockchainStatus.textContent = data.blockchain_connected ? 'Connected' : 'Disconnected';
+                    blockchainStatus.className = data.blockchain_connected ? 'status-value connected' : 'status-value disconnected';
+                    
+                    document.getElementById('network').textContent = data.network;
+                })
+                .catch(error => {
+                    console.error('Error fetching API status:', error);
+                    document.getElementById('status').textContent = 'Error';
+                    document.getElementById('model-status').textContent = 'Unknown';
+                    document.getElementById('blockchain-status').textContent = 'Unknown';
+                    document.getElementById('network').textContent = 'Unknown';
+                });
+        }
+
+        function predictRisk() {
+            const liquidityRate = parseFloat(document.getElementById('liquidityRate').value);
+            const variableBorrowRate = parseFloat(document.getElementById('variableBorrowRate').value);
+            const stableBorrowRate = parseFloat(document.getElementById('stableBorrowRate').value);
+
+            const data = {
+                liquidityRate,
+                variableBorrowRate,
+                stableBorrowRate
+            };
+
+            fetch('/api/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('predict-response').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('predict-response').textContent = 'Error: ' + error.message;
+            });
+        }
+
+        function analyzeAsset() {
+            const symbol = document.getElementById('symbol').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+
+            const data = {
+                symbol,
+                amount
+            };
+
+            fetch('/api/analyze', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('analyze-response').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('analyze-response').textContent = 'Error: ' + error.message;
+            });
+        }
+
+        function checkFlashLoan() {
+            const borrower = document.getElementById('borrower').value;
+            const tokens = document.getElementById('loan-tokens').value.split(',').map(t => t.trim());
+            const amounts = document.getElementById('loan-amounts').value.split(',').map(a => parseInt(a.trim()));
+
+            const data = {
+                borrower,
+                tokens,
+                amounts
+            };
+
+            fetch('/api/blockchain/check-loan', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('check-loan-response').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('check-loan-response').textContent = 'Error: ' + error.message;
+            });
+        }
+
+        function simulateFlashLoan() {
+            const receiver = document.getElementById('receiver').value;
+            const tokens = document.getElementById('sim-tokens').value.split(',').map(t => t.trim());
+            const amounts = document.getElementById('sim-amounts').value.split(',').map(a => parseInt(a.trim()));
+
+            const data = {
+                receiver,
+                tokens,
+                amounts
+            };
+
+            fetch('/api/blockchain/simulate-loan', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('simulate-loan-response').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('simulate-loan-response').textContent = 'Error: ' + error.message;
+            });
+        }
+
+        function getNetworkInfo() {
+            fetch('/api/blockchain/network')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('network-info-response').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('network-info-response').textContent = 'Error: ' + error.message;
+            });
+        }
+
+        function getTokenPrice() {
+            const token = document.getElementById('token').value;
+            
+            fetch(/api/blockchain/token-price?token=)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('token-price-response').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('token-price-response').textContent = 'Error: ' + error.message;
+            });
+        }
+
+        function getSupportedTokens() {
+            fetch('/api/blockchain/supported-tokens')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('supported-tokens-response').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('supported-tokens-response').textContent = 'Error: ' + error.message;
+            });
+        }
+    </script>
+</body>
+</html>
